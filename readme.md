@@ -1,9 +1,9 @@
-#Neural Style Transfer
+# Neural Style Transfer
 
 This project implements the classic "A Neural Algorithm of Artistic Style" by Gatys et al..
 The goal is to blend the content of one image with the style of another using optimization and deep neural network features.
 
-##How It Works (Brief)
+## How It Works (Brief)
 
 A pretrained CNN (typically VGG19) extracts feature representations from both the content and style images.
 
@@ -13,7 +13,7 @@ Style loss uses Gram matrices to match textures, colors, and patterns from the s
 
 The model iteratively updates a generated image to minimize both losses and produce a stylized result.
 
-##Example
+## Example
 Content Image
 
 Style Image
