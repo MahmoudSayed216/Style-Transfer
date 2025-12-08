@@ -18,4 +18,4 @@ Content Image: ![Content Image](src.png)
 
 Style Image: ![Style Image](dst.jpg)
 
-Stylized Output: ![Stylized Output](output/14__.jpg)
+Stylized Output: ![Stylized Output](outputs/14__.jpg)
