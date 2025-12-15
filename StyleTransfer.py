@@ -10,6 +10,7 @@ from torch import mm
 from PIL import Image
 from torchvision.transforms.functional import to_pil_image
 import torch
+import os
 
 #VGG16's architecture: 2*conv pool[1] 0  1  2  3  4 -> conv1_1, conv1_2
 #                      2*conv pool[2] 5  6  7  8  9 -> conv2_1, conv2_2
@@ -23,10 +24,14 @@ import torch
 
 
 class StyleTransferer:
-    def __init__(self, model : Literal["VGG16", "VGG19", "AlexNet"] , pooling_type : Literal["MaxPooling", "AVGPooling"]):
+    def __init__(self, model : Literal["VGG16", "VGG19", "AlexNet"] , pooling_type : Literal["MaxPooling", "AVGPooling"], device = "cuda", output_path="/kaggle/working/outputs", new_size = 900):
         self.model_name = model
         self.pooling_type = pooling_type
+        os.makedirs(output_path, exist_ok=True)
+        self.output_path = output_path
         self.model_layers = {}
+        self.device = device
+        self.new_size = new_size
         self._load_model()
         self._setup_model()
         self._set_model_layers()
@@ -38,7 +43,7 @@ class StyleTransferer:
 
     ## PRIVATE_METHODS
     def _load_model(self) -> None:
-        self.model = vgg16(weights = VGG16_Weights).features
+        self.model = vgg16(weights = VGG16_Weights.DEFAULT).features.to(self.device)
         
 
     def _setup_model(self) -> None:
@@ -92,7 +97,8 @@ class StyleTransferer:
         
 
     def save_vgg_tensor_as_jpeg(self, tensor, path):
-        # undoing the transformations
+
+
         if tensor.dim() == 4:
             tensor = tensor.squeeze(0)
 
@@ -105,7 +111,8 @@ class StyleTransferer:
             img = tensor + mean
             img = img.clamp(0, 255)
             img = img / 255.0
-
+            
+            img = img.detach().cpu()
             to_pil_image(img).save(path, format="JPEG", quality=95)
 
 
@@ -116,9 +123,9 @@ class StyleTransferer:
         content_image = Image.open(content_image_path).convert('RGB')
         style_image = Image.open(style_image_path).convert('RGB')
 
-        NEW_SIZE = 400
+        NEW_SIZE = 900
         trans = transforms.Compose([
-            transforms.Resize(NEW_SIZE),
+            transforms.Resize(self.new_size),
             transforms.ToTensor(),
             transforms.Lambda(lambda x: x * 255),
             transforms.Normalize(
@@ -132,12 +139,13 @@ class StyleTransferer:
         content_image = trans(content_image)
         style_image = trans(style_image)
 
-        content_image = content_image.unsqueeze(0)
-        style_image = style_image.unsqueeze(0)
+        content_image = content_image.unsqueeze(0).to(self.device)
+        style_image = style_image.unsqueeze(0).to(self.device)
 
 
-        content_image_fmaps = self._pass_image_through_network(content_image)
-        style_image_fmaps = self._pass_image_through_network(style_image)
+        with torch.no_grad():
+            content_image_fmaps = self._pass_image_through_network(content_image)
+            style_image_fmaps = self._pass_image_through_network(style_image)
 
         style_image_gram_matrices = {}
         for i in self.layers_indices:
@@ -176,7 +184,7 @@ class StyleTransferer:
 
             optim.step(closure)
             
-            self.save_vgg_tensor_as_jpeg(target_image, f"outputs/{i}__")
+            self.save_vgg_tensor_as_jpeg(target_image, f"{self.output_path}/{i}.jpg")
 
         return target_image
 
