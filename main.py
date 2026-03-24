@@ -21,26 +21,3 @@ if __name__ == "__main__":
     image = obj.transfer_image_style(content_image_path=content_img_path, style_image_path=style_img_path, alpha=1, beta=1_000_000, epochs=40, learning_rate=0.001)
 
 
-
-
-# def save_vgg_tensor_as_jpeg(tensor, path):
-    
-#     if tensor.dim() == 4:
-#         tensor = tensor.squeeze(0)
-
-
-#     #undoing the preprocessing 
-#     mean = torch.tensor(
-#         [123.68, 116.779, 103.939],
-#         device=tensor.device
-#     ).view(3, 1, 1)
-
-#     with torch.no_grad():
-#         img = tensor + mean
-#         img = img.clamp(0, 255)
-#         img = img / 255.0
-
-#         to_pil_image(img).save(path, format="JPEG", quality=95)
-
-
-# save_vgg_tensor_as_jpeg(image, "output1.jpeg")
