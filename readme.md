@@ -20,5 +20,5 @@ Content Image: ![Content Image](content/1340526.jpeg)
 Style Image: ![Style Image](styles/36.jpg)
 
 
-Stylized Output: ![Stylized Output](outputs/19__.jpg)
+Stylized Output: ![Stylized Output](outputs_/19__.jpg)
 
