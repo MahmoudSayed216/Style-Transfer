@@ -22,3 +22,35 @@ Style Image: ![Style Image](styles/36.jpg)
 
 Stylized Output: ![Stylized Output](outputs_/19__.jpg)
 
+
+## How to Run
+
+### Prerequisites
+
+Install the required dependencies:
+```bash
+pip install torch torchvision pillow
+```
+
+> A CUDA-compatible GPU is recommended for faster processing.
+
+### Usage
+```bash
+python main.py <content_image> <style_image> <output_dir> <image_size>
+```
+
+**Arguments:**
+
+| Argument | Description | Example |
+|---|---|---|
+| `content_image` | Path to the content image | `images/photo.jpg` |
+| `style_image` | Path to the style/reference image | `images/style.jpg` |
+| `output_dir` | Directory to save output images | `outputs/` |
+| `image_size` | Resize the longer edge to this value (px) | `512` |
+
+### Example
+```bash
+python main.py images/photo.jpg images/starry_night.jpg outputs/ 512
+```
+
+Output images are saved to the specified directory after each epoch, named `0.jpg`, `1.jpg`, ..., `39.jpg`.
