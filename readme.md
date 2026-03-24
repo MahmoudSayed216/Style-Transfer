@@ -17,7 +17,7 @@ The model iteratively updates a generated image to minimize both losses and prod
 Content Image: ![Content Image](content/1340526.jpeg)
 
 
-Style Image: ![Style Image](dst.jpg)
+Style Image: ![Style Image](styles/36.jpg)
 
 
 Stylized Output: ![Stylized Output](outputs/14__.jpg)
