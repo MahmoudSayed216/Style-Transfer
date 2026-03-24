@@ -14,7 +14,7 @@ Style loss uses Gram matrices to match textures, colors, and patterns from the s
 The model iteratively updates a generated image to minimize both losses and produce a stylized result.
 
 ## Example
-Content Image: ![Content Image](src.png)
+Content Image: ![Content Image](content/1340526.jpeg)
 
 
 Style Image: ![Style Image](dst.jpg)
