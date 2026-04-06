@@ -47,6 +47,7 @@ python main.py <content_image> <style_image> <output_dir> <image_size>
 | `style_image` | Path to the style/reference image | `images/style.jpg` |
 | `output_dir` | Directory to save output images | `outputs/` |
 | `image_size` | Resize the longer edge to this value (px) | `512` |
+| `epochs` | How many epochs should the model run | `10` |
 
 ### Example
 ```bash
