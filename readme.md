@@ -43,6 +43,7 @@ python main.py <content_image> <style_image> <output_dir> <image_size>
 
 | Argument | Description | Example |
 |---|---|---|
+| `image_format` | the format of which the image source was passed | `Literal["path", "b64"]` |
 | `content_image` | Path to the content image | `images/photo.jpg` |
 | `style_image` | Path to the style/reference image | `images/style.jpg` |
 | `output_dir` | Directory to save output images | `outputs/` |

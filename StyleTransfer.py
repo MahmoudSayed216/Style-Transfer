@@ -11,6 +11,7 @@ from PIL import Image
 from torchvision.transforms.functional import to_pil_image
 import torch
 import os
+import io
 
 #VGG16's architecture: 2*conv pool[1] 0  1  2  3  4 -> conv1_1, conv1_2
 #                      2*conv pool[2] 5  6  7  8  9 -> conv2_1, conv2_2
@@ -116,12 +117,15 @@ class StyleTransferer:
             to_pil_image(img).save(path, format="JPEG", quality=95)
 
 
-    def transfer_image_style(self, content_image : Tensor = None, style_image : Tensor = None, content_image_path : str = None, style_image_path : str = None, start_with_content = True, cross_compute_gram_matrix = False, epochs: int = 100, alpha : float = 1, beta : float = 1e5, intialize_with_noise = True, learning_rate = 0.001) -> Tensor:
+    def transfer_image_style(self, image_format: Literal["path", "b64"], content_image_src : str = None, style_image_src : str = None, start_with_content = True, cross_compute_gram_matrix = False, epochs: int = 100, alpha : float = 1, beta : float = 1e5, intialize_with_noise = True, learning_rate = 0.001) -> Tensor:
         self.alpha = alpha
         self.beta = beta
-
-        content_image = Image.open(content_image_path).convert('RGB')
-        style_image = Image.open(style_image_path).convert('RGB')
+        if image_format == "path":
+            content_image = Image.open(content_image_src).convert('RGB')
+            style_image = Image.open(style_image_src).convert('RGB')
+        elif image_format == "b64":
+            content_image = Image.open(io.BytesIO(content_image_src))
+            style_image   = Image.open(io.BytesIO(style_image_src))
 
         NEW_SIZE = 900
         trans = transforms.Compose([
