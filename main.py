@@ -16,6 +16,9 @@ if __name__ == "__main__":
     output_path = args[4]
     new_size = int(args[5])
     epochs = int(args[6])
+    alpha = float(args[7])
+    beta = float(args[8])
+
     print("Initializing StyleTransfer Object")
     obj = StyleTransferer('VGG16', pooling_type='MaxPooling', output_path=output_path, device='cuda', new_size = new_size)
     print("Object Initialized")
