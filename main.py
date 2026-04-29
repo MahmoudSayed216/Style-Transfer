@@ -20,6 +20,6 @@ if __name__ == "__main__":
     obj = StyleTransferer('VGG16', pooling_type='MaxPooling', output_path=output_path, device='cuda', new_size = new_size)
     print("Object Initialized")
     print("Operating on the input images")
-    image = obj.transfer_image_style(image_format=image_format, content_image_path=content_img_path, style_image_path=style_img_path, alpha=1, beta=1_000_000, epochs=epochs, learning_rate=0.001)
+    image = obj.transfer_image_style(image_format=image_format, content_image_src=content_img_path, style_image_src=style_img_path, alpha=1, beta=1_000_000, epochs=epochs, learning_rate=0.001)
     print("Operation Completed")
 
