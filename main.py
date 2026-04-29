@@ -16,9 +16,10 @@ if __name__ == "__main__":
     output_path = args[4]
     new_size = int(args[5])
     epochs = int(args[6])
-    
+    print("Initializing StyleTransfer Object")
     obj = StyleTransferer('VGG16', pooling_type='MaxPooling', output_path=output_path, device='cuda', new_size = new_size)
-
+    print("Object Initialized")
+    print("Operating on the input images")
     image = obj.transfer_image_style(image_format=image_format, content_image_path=content_img_path, style_image_path=style_img_path, alpha=1, beta=1_000_000, epochs=epochs, learning_rate=0.001)
-
+    print("Operation Completed")
 
